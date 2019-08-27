@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="lib/vue-2.6.1.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="button" value="登录" @click="login=true" />
+      <input type="button" value="注册" @click="login=false" />
+      <login v-if="login"></login>
+      <logon v-else="logon"></logon>
+    </div>
+
+    <template id="login">
+      <div>
+        <h3>{{ msg }}</h3>
+      </div>
+    </template>
+    <template id="logon">
+      <div>
+        <h3>{{ msg }}</h3>
+      </div>
+    </template>
+
+    <script>
+      Vue.component("login", {
+        template: "#login",
+        data: function() {
+          return {
+            msg: "这是登录组件"
+          };
+        }
+      });
+
+      Vue.component("logon", {
+        template: "#logon",
+        data: function() {
+          return {
+            msg: "这是注册组件"
+          };
+        }
+      });
+
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          login: true
+        },
+        methods: {}
+      });
+    </script>
+  </body>
+</html>

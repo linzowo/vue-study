@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-4.min.css" />
+    <script src="./lib/vue-2.6.1.js"></script>
+    <script src="./lib/vue-router-3.1.2.js"></script>
+    <style>
+        .row{
+            height: 400px;
+            background-color: yellow;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 模板占位 -->
+      <div class="container">
+        <router-view class="navbar navbar-dark bg-primary"></router-view>
+        <div class="row">
+          <router-view name="left" class="col-3 bg-dark"></router-view>
+          <router-view name="main" class="col-9 bg-light"></router-view>
+        </div>
+      </div>
+    </div>
+
+    <!-- header模板 -->
+    <template id="header">
+      <h1>
+        header
+      </h1>
+    </template>
+
+    <!-- left模板 -->
+    <template id="left">
+      <h1>
+        left侧边栏
+      </h1>
+    </template>
+
+    <!-- main模板 -->
+    <template id="main">
+      <h1>
+        main区域
+      </h1>
+    </template>
+    <script>
+      // 创建模板对象
+      var header = { template: "#header" };
+      var left = { template: "#left" };
+      var main = { template: "#main" };
+
+      //   创建路由实例
+      const router = new VueRouter({
+        routes: [
+          {
+            path: "/",
+            components: {
+              default: header,
+              left: left,
+              main: main
+            }
+          }
+        ]
+      });
+
+      // 创建vue实例
+      var vm = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        router
+      });
+    </script>
+  </body>
+</html>

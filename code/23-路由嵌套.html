@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+    <script src="./lib/vue-router-3.1.2.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 路由导航区 -->
+      <router-link to="/account">account</router-link>
+      <!-- account展示区占位符 -->
+      <router-view></router-view>
+    </div>
+
+    <!-- 创建模板 -->
+    <template id="account">
+      <div>
+        <h1>这是account组件</h1>
+
+        <!-- 子路由组件导航 -->
+        <router-link to="/account/login">login</router-link>
+        <router-link to="/account/logon">logon</router-link>
+
+        <!-- 子路由展示区占位符 -->
+        <router-view></router-view>
+      </div>
+    </template>
+
+    <!-- 子路由模板 -->
+    <template id="login">
+      <h3>
+        登录
+      </h3>
+    </template>
+
+    <template id="logon">
+      <h3>
+        注册
+      </h3>
+    </template>
+    <script>
+      // 创建account模板对象
+      var account = {
+        template: "#account"
+      };
+
+      // 创建子路由模板对象
+      var login = { template: "#login" };
+      var logon = { template: "#logon" };
+      // 创建路由实例
+      const router = new VueRouter({
+        routes: [
+          { path: "/", redirect: "/account" },
+          {
+            path: "/account",
+            component: account,
+            children: [
+              { path: "login", component: login },
+              { path: "logon", component: logon }
+            ]
+          }
+        ]
+      });
+      // 创建vue实例
+      new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        router: router,
+        watch: {
+            '$route.path': function (newval,oldval) {
+                // console.log(newval+ '====='+oldval);
+                
+                if (newval == '/account/login') {
+                    console.log('加入登录界面');
+                    
+                }else if(newval == '/account/logon'){
+                    console.log('进入注册界面');
+                    
+                }
+            }
+        },
+      });
+    </script>
+  </body>
+</html>

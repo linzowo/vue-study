@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+    <style>
+        [cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p v-cloak>{{ msg1 }}</p>
+        <p v-text="msg2"></p>
+        <p v-html="msg3"></p>
+        <button v-bind:title="mytitle + '++++'">按钮</button>
+        <button :title="mytitle + '---'">按钮</button>
+        <button v-on:click="show">点一下</button>
+        <button @click="show">点一下</button>
+    </div>    
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg1: 'no1',
+                msg2: 'no2',
+                msg3: "<h1>这是H1</h1>",
+                mytitle: "这是我的title"
+            },
+            methods: {
+                show: function(){
+                    alert('hello');
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-4.min.css" />
+    <script src="./lib/vue-2.6.1.js"></script>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <comments :falist="list" @faload="loadComments"></comments>
+    </div>
+
+    <template id="comments">
+      <div>
+        <div class="form-group mt-5">
+          <label for="">name:</label>
+          <input type="text"  class="form-control" v-model="name">
+          <label for="">content:</label>
+          <input type="text"  class="form-control" v-model="content">
+          <input  class="btn btn-primary mt-2" type="button" value="添加" @click="add">
+        </div>
+        <ul class="list-group mt-4">
+          <li class="list-group-item active">评论列表</li>
+          <li
+            class="list-group-item justify-content-between d-flex align-items-center"
+            v-for="(item, i) in falist"
+            :key="item.id"
+            @click="del(i)"
+          >
+            {{ item.content }}
+            <span class="badge badge-primary badge-pill" >评论人 : {{ item.name }}</span
+            >
+          </li>
+        </ul>
+      </div>
+    </template>
+
+    <template id="addComments"> </template>
+
+    <script>
+      // 创建一个模板对象
+      var comTmpl = {
+        template: "#comments",
+        data: function() {
+          return {
+            name: "",
+            content: ""
+          }
+        },
+        props: ['falist'],
+        methods: {
+          add(){
+            
+            let list = JSON.parse(localStorage.getItem('comments') || '[]')
+            
+            list.push({ id: Date.now(), name: this.name, content: this.content})
+            
+            localStorage.setItem('comments',JSON.stringify(list))
+            this.$emit('faload')
+          },
+          del(i){
+            
+            let list = JSON.parse(localStorage.getItem('comments'));
+            list.splice(i,1);
+            localStorage.setItem('comments',JSON.stringify(list))
+            this.$emit('faload')
+          }
+        }
+      };
+
+      // 创建vue实例
+      // 将父组件的值传递到子组件中
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          list: [
+              {
+                id: Date.now(),
+                name: "html",
+                content: "没有我你啥也干不了."
+              },
+              { id: Date.now(), name: "css", content: "没有我你就是个丑人" },
+              {
+                id: Date.now(),
+                name: "JavaScript",
+                content: "没有我你就没有灵魂."
+              },
+              { id: Date.now(), name: "php", content: "没有我你只是个躯壳." }
+            ]
+        },
+        created() {
+          this.loadComments()
+        },
+        methods: {
+          loadComments(){
+            // 读取本地存储 如果不存在就返回一个空数组
+            var list = JSON.parse(localStorage.getItem('comments') || '[]')
+            this.list = list
+            
+          }
+        },
+        components: {
+          comments: comTmpl
+        }
+      });
+    </script>
+  </body>
+</html>

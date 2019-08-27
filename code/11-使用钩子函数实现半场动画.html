@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+    <style>
+      .point {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+        /* transform: translate(0,0) */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="button" value="加入购物车" @click="flag=!flag" />
+
+      <transition
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter"
+      >
+        <span v-show="flag" class="point"></span>
+      </transition>
+    </div>
+
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          flag: false
+        },
+        methods: {
+          beforeEnter(el) {
+            el.style.transform = "translate(0,0)";
+          },
+          enter(el, done) {
+            el.offsetWidth; // 不加这行没有动画效果，其他offset系列也可以
+            el.style.transform = "translate(200px,400px)";
+            el.style.transition = "all 1s ease";
+            done();
+          },
+          afterEnter(el) {
+            this.flag = !this.flag;
+            // console.log(this.flag);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

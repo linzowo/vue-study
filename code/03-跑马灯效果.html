@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="打死他" @click="tao">
+        <input type="button" value="休息一下" @click="xiu">
+
+        <h4>{{ msg }}</h4>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "你来打我啊=======看我不打死你~~~！！！"
+            },
+            methods: {
+                tao(){
+                    this.t1 = setInterval(() => {
+                        let start = this.msg.substring(0,1)
+                        let end = this.msg.substring(1)
+                        this.msg = end + start
+                    }, 400);
+                },
+                xiu(){
+                    clearInterval(this.t1)
+                }
+            }
+        });
+    </script>
+</body>
+</html>

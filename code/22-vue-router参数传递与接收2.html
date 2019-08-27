@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+    <script src="./lib/vue-router-3.1.2.js"></script>
+  </head>
+  <body>
+    <div id="app">
+        <!-- 添加路由导航 -->
+        <router-link to="/login/10/ok">login</router-link>
+        <router-link to="/logon/10/no">logon</router-link>
+
+        <!-- 添加路由模板占位符 -->
+        <router-view></router-view>
+    </div>
+
+    <!-- 创建模板 -->
+    <template id="login">
+      <div>
+        <h1>登录模块===id:{{ $route.params.id }}===name:{{ $route.params.name }}</h1>
+      </div>
+    </template>
+
+    <template id="logon">
+      <div>
+        <h1>注册模块</h1>
+      </div>
+    </template>
+    <script>
+      // 创建模板对象
+      var login = Vue.extend({
+        template: "#login"
+      });
+      var logon = Vue.extend({
+        template: "#logon",
+        created() {
+            console.log(this.$route);
+            
+        },
+      });
+      // 创建路由对象实例==>第二种传参方式==>在路由种加入/：的规则
+      const router = new VueRouter({
+        routes: [
+            { path: '/', redirect: '/login'},
+          { path: "/login/:id/:name", component: login },
+          { path: "/logon/:id/:name", component: logon }
+        ]
+      });
+      // 创建vue实例
+      var vm = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        created(){
+            console.log(this.$route);
+            
+        },
+        router: router
+      });
+    </script>
+  </body>
+</html>

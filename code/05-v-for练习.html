@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!-- 引入vue -->
+    <script src="./lib/vue-2.6.1.js"></script>
+  </head>
+  <body>
+    <!-- 创建控制区域 -->
+    <div id="app">
+      <label for="">
+        ID:
+        <input type="text" name="" id="" v-model="id" />
+        Name:
+        <input type="text" name="" id="" v-model="name" />
+        <input type="button" value="添加" @click="add" />
+      </label>
+
+      <p v-for="item in list" :key="item.id">
+        <input type="checkbox"/>
+        id: {{ item.id }} +++++ name: {{ item.name }}
+      </p>
+    </div>
+
+    <script>
+      // 创建vue对象
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          id: "",
+          name: "",
+          list: [
+            { id: 1, name: "js" },
+            { id: 2, name: "html" },
+            { id: 3, name: "css" },
+            { id: 4, name: "jquery" },
+            { id: 5, name: "php" }
+          ]
+        },
+        methods: {
+          add() {
+            // this.list.push({ id: this.id, name: this.name });
+            this.list.unshift({ id: this.id, name: this.name });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

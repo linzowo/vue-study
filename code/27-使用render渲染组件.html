@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <template id="login">
+        <h1>
+           这是登录组件 
+        </h1>
+    </template>
+    <script>
+
+        var login = Vue.extend({
+            template:'#login'
+        })
+        // 创建vue实例
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '你好'
+            },
+            methods: {
+                
+            },
+            render: function (createElements) {
+                return createElements(login)
+            }
+        })
+    </script>
+</body>
+</html>

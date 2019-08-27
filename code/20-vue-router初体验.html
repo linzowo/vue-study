@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-4.min.css">
+    <script src="./lib/vue-2.6.1.js"></script>
+    <script src="./lib/vue-router-3.1.2.js"></script>
+
+    <style>
+        .router-link-active,
+        .myactive{
+            background-color: blue;
+            color: green;
+            font-size: 50px;
+            font-weight: 700;
+            text-decoration: underline;
+            font-style: oblique;
+        }
+
+        .v-enter,
+        .v-leave-to{
+            transform: translateX(100px);
+        }
+
+        .v-enter-active,
+        .v-leave-active{
+            transition: all .5s ease;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/login">login</router-link>
+      <router-link to="/logon">logon</router-link>
+
+      <transition mode="out-in">
+            <router-view></router-view>
+      </transition>
+    </div>
+
+    <template id="login">
+      <div>
+        <h1>这是登录</h1>
+      </div>
+    </template>
+
+    <template id="logon">
+      <div>
+        <h1>这是注册</h1>
+      </div>
+    </template>
+
+    <script>
+      // 创建两个模板对象
+      var login = Vue.extend({ template: "#login" });
+      var logon = Vue.extend({ template: "#logon" });
+
+      // Vue.extend(login)
+      // Vue.extend(logon)
+      // 创建一个路由实例
+      const router = new VueRouter({
+        routes: [
+          { path: "/", redirect: "/login" },
+          { path: "/login", component: login },
+          { path: "/logon", component: logon }
+        ],
+        linkActiveClass: 'myactive'
+      });
+
+      // 创建一个vue实例
+      var vm = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        router: router
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(200px)
+        }
+
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.5s ease;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+            <input type="button" value="登录" @click="tmplName='login'">
+            <input type="button" value="注册" @click="tmplName='logon'">
+
+            <!-- 无动画效果 -->
+            <!-- <component :is="tmplName"></component> -->
+
+            <!-- 有动画效果 -->
+            <!-- mode属性确定动画的风格 -->
+            <transition mode="out-in">
+                <component :is="tmplName"></component>
+            </transition>
+    </div>
+
+    <template id="login">
+        <div>
+            <h3>{{msg}}</h3>
+        </div>
+    </template>
+
+    <template id="logon">
+        <div>
+            <h3>{{msg}}</h3>
+        </div>
+    </template>
+
+    <script>
+
+        Vue.component('login', {
+            template: '#login',
+            data: function (){
+                return {
+                    msg: '这是一个登录组件'
+                }
+            }
+        })
+
+        Vue.component('logon', {
+            template: '#logon',
+            data: function (){
+                return {
+                    msg: '这是一个注册组件'
+                }
+            }
+        })
+      var vm = new Vue({
+        el: "#app",
+        data:{
+            tmplName: 'login'
+        }
+      })
+    </script>
+  </body>
+</html>

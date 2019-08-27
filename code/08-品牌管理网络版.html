@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-4.min.css" />
+    <script src="./lib/vue-2.6.1.js"></script>
+    <script src="./lib/vue-resource-1.5.1.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <!-- start 输入框 -->
+        <div class="form-row align-items-center mt-5">
+          <div class="col-sm-3 my-1">
+            <label for="name">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">name：</span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                v-model="name"
+              />
+            </label>
+
+            </div>
+          </div>
+          <div class="col-auto my-1">
+            <a class="btn btn-primary" @click.prevent="addCar">添加</a>
+          </div>
+        </div>
+        <!-- end 输入框 -->
+        <table class="table table-bordered mt-2">
+          <thead class="thead-dark">
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>ctime</th>
+              <th>option</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in list" :key="item.id">
+              <td scope="row">{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.ctime }}</td>
+              <td>
+                <a href="" class="btn btn-danger" @click.prevent="delCar(item.id)">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      // 设置全局的http请求跟地址
+      // Vue.http.options.root = "http://myvueapi.io/";
+
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          name: "",
+          list: []
+        },
+        http: { // 单独设置单个http的根地址
+          root: "http://myvueapi.io/"
+        },
+        created() {
+          this.getCarList()
+        },
+        methods: {
+          getCarList(){ // 获取数据库中列表所有数据
+            this.$http.get("carList.php").then(result => {
+              // console.log(result.body);
+              let catList = result.body
+              this.list = []
+              catList.forEach(ele => {
+                this.list.push({id: ele[0],name: ele[1], ctime: ele[2]})
+              });
+              
+            })
+          },
+          addCar(){ // 新增数据
+            this.$http.post("carList.php",{ name: this.name },{emulateJSON:true}).then(result =>{
+              if(result.body.success){
+                this.getCarList()
+              }
+            })
+          },
+          delCar(id){ // 删除数据
+            this.$http.post("carList.php",{ id: id },{emulateJSON:true}).then(result => {
+              if(result.body.success){
+                this.getCarList()
+              }
+            })
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

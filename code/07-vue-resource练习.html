@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+    <script src="./lib/vue-resource-1.5.1.js"></script>
+  </head>
+  <body>
+    <div id="app">
+        <input type="button" value="get" @click="getinfo">
+        <input type="button" value="post" @click="postinfo">
+        <input type="button" value="jsonp" @click="jsonpinfo">
+    </div>
+
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {},
+        methods: {
+            getinfo(){
+                this.$http.get("http://vue.studyit.io/api/getlunbo").then(result => {
+                    console.log(result.body);
+                })
+            },
+            postinfo(){
+                this.$http.post("http://vue.studyit.io/api/post",{},{emulateJSON:true}).then(result => {
+                    console.log(result.body);
+                })
+            },
+            jsonpinfo(){
+                this.$http.jsonp("http://api.douban.com/v2/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=10").then(result => {
+                    console.log(result.body);
+                })
+            }
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <son @fafnc="show"></son>
+    </div>
+
+    <template id="son">
+      <div>
+        <h3>这是子组件</h3>
+        <input type="button" value="调用父组件方法" @click="myclick" />
+      </div>
+    </template>
+    <script>
+      var son = {
+        template: "#son",
+        data: function() {
+          return {
+              sonMsg: {id: 1, name: 'html'}
+          };
+        },
+        methods: {
+            myclick(){
+                this.$emit('fafnc',this.sonMsg) // 这个方法是用来触发方法的,将父组件的方法绑定到子组件后可以通过它来触发
+            }
+        }
+      };
+
+      new Vue({
+        el: "#app",
+        data: {
+          dataMsgFromSon: null
+        },
+        methods: {
+          show(data) {
+            console.log("父组件中的show方法" + data);
+
+            this.dataMsgFromSon = data // 通过传参赋值的方式可以获取到子组件中的data
+          }
+        },
+        components: {
+          son: son
+        }
+      });
+    </script>
+  </body>
+</html>

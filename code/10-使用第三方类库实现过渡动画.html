@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/animate.css" />
+    <script src="./lib/vue-2.6.1.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="button" value="toggle" @click="flag=!flag" />
+
+      <!-- 在动画标签中加入动画类 -->
+      <!-- <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+            <h3 v-if="flag">这是一个h3</h3>
+        </transition> -->
+
+      <!-- 加入时间控制 进入和离开时间一致-->
+      <!-- <transition
+        enter-active-class="bounceIn"
+        leave-active-class="bounceOut"
+        :duration="1600"
+      >
+        <h3 v-if="flag" class="animated">这是一个h3</h3>
+      </transition> -->
+
+      <!-- 加入时间控制 分别设置进入和离开时间 -->
+      <transition
+        enter-active-class="bounceIn"
+        leave-active-class="bounceOut"
+        :duration="{enter: 1600, leave: 400}"
+      >
+        <h3 v-if="flag" class="animated">这是一个h3</h3>
+      </transition>
+    </div>
+
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          flag: false
+        },
+        methods: {}
+      });
+    </script>
+  </body>
+</html>

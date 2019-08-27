@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mytmpl></mytmpl>
+        <mytmpl></mytmpl>
+        <mytmpl></mytmpl>
+        <mytmpl></mytmpl>
+    </div>
+
+    <!-- 不管使用哪种方式书写模板,模板中都只能有一个根元素 -->
+    <!-- <template id="tmpl">
+        <div>
+            <h1>这是第三种创建组件的方式,通过一个新的盒子来写,可以使用代码提示</h1>
+            <h3>这种更爽</h3>
+        </div>
+    </template> -->
+
+    <template id="tmpl">
+        <div>
+            <h1>这是一个私有组件</h1>
+        </div>
+    </template>
+
+    <script>
+        // 组件创建元素方法1
+        // 1.创建模板
+        // var tmpl = Vue.extend({
+        //     template: "<h1>这是通过模板创建的h1</h1>"
+        // })
+        // // 2.调用模板
+        // Vue.component("mytmpl",tmpl)
+
+        // 组件创建元素方法2
+        // Vue.component('mytmpl',{
+        //     template: "<h3>这是通过第二种方式创建的h3</h3>"
+        // })
+
+        // 组件创建元素方法3
+        // Vue.component('mytmpl',{
+        //     template: "#tmpl"
+        // })
+
+        // 以上三种方式定义的都是全局的组件,可以在多个vue实例中调用
+
+        // 调用组件中的data数据
+        Vue.component("mytmpl", {
+            template: "<h3>这是组件中的data数据====== {{ msg }}</h3>",
+            data: function () {
+                return {
+                    msg: "我是data中的msg"
+                }
+            }
+        })
+
+        // 创建一个vue对象
+        var vm = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                
+            },
+            components: { // 定义私有组件,只能被当前所在的vue实例访问
+                // mytmpl: {
+                //     template: "#tmpl"
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

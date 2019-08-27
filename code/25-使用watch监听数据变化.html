@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.6.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="firstnum">
+        +
+        <input type="text" v-model="secondnum">
+        =
+        <input type="text" v-model="result">
+    </div>
+
+    <script>
+
+        // 创建vue实例
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstnum: '',
+                secondnum: '',
+                result: ''
+            },
+            methods: {
+                
+            },
+            watch: {
+                'firstnum': function(newVal){
+                    this.result = newVal + this.secondnum
+                },
+                'secondnum': function(newVal){
+                    this.result = newVal + this.firstnum
+                },
+            },
+        })
+    </script>
+</body>
+</html>
